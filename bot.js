@@ -8,12 +8,12 @@ client.on('qr', qr => {
 });
 
 client.on('ready', () => {
-    console.log('Bot is ready!');
+    console.log('WhatsApp bot is ready!');
 });
 
-client.on('message', msg => {
-    if (msg.body === 'مرحبا') {
-        msg.reply('مرحبا، أنا مساعد نفسي بالذكاء الاصطناعي. كيف أقدر أساعدك؟');
+client.on('message', message => {
+    if(message.body === 'hi') {
+        message.reply('Hello from the bot!');
     }
 });
 
