@@ -1,24 +1,24 @@
-const { Client } = require('whatsapp-web.js');
-const qrcode = require('qrcode-terminal');
+const { Client } = require('whatsapp-web.js')
+const qrcode = require('qrcode-terminal')
 
 const client = new Client({
   puppeteer: {
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
+    args: ['--no-sandbox','--disable-setuid-sandbox']
   }
-});
+})
 
 client.on('qr', qr => {
-  qrcode.generate(qr, { small: true });
-});
+  qrcode.generate(qr, { small: true })
+})
 
 client.on('ready', () => {
-  console.log('Bot is ready!');
-});
+  console.log('Bot is ready!')
+})
 
 client.on('message', msg => {
   if (msg.body === 'hi') {
-    msg.reply('Hello!');
+    msg.reply('Hello')
   }
-});
+})
 
-client.initialize();
+client.initialize()
