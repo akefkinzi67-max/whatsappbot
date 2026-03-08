@@ -1,28 +1,33 @@
-const { Client } = require('whatsapp-web.js')
-const qrcode = require('qrcode-terminal')
-const puppeteer = require('puppeteer')
+const { default: makeWASocket, useMultiFileAuthState } = require("@whiskeysockets/baileys")
 
-const client = new Client({
-  puppeteer: {
-    headless: true,
-    executablePath: puppeteer.executablePath(),
-    args: ['--no-sandbox','--disable-setuid-sandbox']
-  }
+async function startBot() {
+
+const { state, saveCreds } = await useMultiFileAuthState("auth")
+
+const sock = makeWASocket({
+auth: state
 })
 
-client.on('qr', qr => {
-  console.log('QR RECEIVED')
-  qrcode.generate(qr, { small: true })
+sock.ev.on("creds.update", saveCreds)
+
+sock.ev.on("messages.upsert", async ({ messages }) => {
+
+const msg = messages[0]
+
+if (!msg.message) return
+
+const text =
+msg.message.conversation ||
+msg.message.extendedTextMessage?.text
+
+if (text === "hi") {
+
+await sock.sendMessage(msg.key.remoteJid, { text: "Hello" })
+
+}
+
 })
 
-client.on('ready', () => {
-  console.log('Bot is ready')
-})
+}
 
-client.on('message', msg => {
-  if (msg.body.toLowerCase() === 'hi') {
-    msg.reply('Hello')
-  }
-})
-
-client.initialize()
+startBot()
