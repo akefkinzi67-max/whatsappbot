@@ -1,3 +1,6 @@
+const crypto = require("crypto")
+global.crypto = crypto
+
 const { default: makeWASocket, useMultiFileAuthState } = require("@whiskeysockets/baileys")
 
 async function startBot() {
@@ -30,4 +33,4 @@ await sock.sendMessage(msg.key.remoteJid, { text: "Hello" })
 
 }
 
-startBot()
+startBot
