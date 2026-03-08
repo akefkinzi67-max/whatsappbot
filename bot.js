@@ -33,4 +33,5 @@ await sock.sendMessage(msg.key.remoteJid, { text: "Hello" })
 
 }
 
-startBot
+startBot()
+
